@@ -1,0 +1,13 @@
+{
+  "name": "Agrotech - AI Agricultural Intelligence Platform",
+  "description": "Enterprise-grade agricultural intelligence platform for Nigerian farmers and the Ministry of Agriculture featuring crop disease vision diagnosis, localized multilingual voice assistant, real-time market price intelligence, and geospatial outbreak analytics.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
+

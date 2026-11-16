@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with role-based access for farmers and ministry officers",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth user ID" },
+        "displayName": { "type": "string", "description": "User full name or alias" },
+        "email": { "type": "string", "description": "User email address" },
+        "photoURL": { "type": "string", "description": "User avatar image URL" },
+        "role": { "type": "string", "enum": ["Farmer", "Agricultural Officer", "Ministry Admin"], "description": "User role in system" },
+        "state": { "type": "string", "description": "Nigerian state jurisdiction or location" },
+        "preferredLanguage": { "type": "string", "description": "Preferred language for voice and alerts" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of user creation" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last profile update" }
+      },
+      "required": ["uid", "role"]
+    },
+    "CropDiagnosis": {
+      "title": "CropDiagnosis",
+      "description": "Field crop diagnosis record submitted by farmers or extension workers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique diagnosis ID" },
+        "userId": { "type": "string", "description": "Submitter Firebase Auth UID" },
+        "farmerName": { "type": "string", "description": "Farmer or submitter display name" },
+        "cropType": { "type": "string", "description": "Suspected or verified crop type" },
+        "diseaseName": { "type": "string", "description": "Identified pathogen or pest" },
+        "confidenceScore": { "type": "number", "description": "Confidence percentage" },
+        "severity": { "type": "string", "enum": ["Low", "Medium", "Critical"], "description": "Disease severity index" },
+        "imageUrl": { "type": "string", "description": "Stored image or base64 data" },
+        "coordinates": { "type": "object", "description": "Geographical coordinates and state" },
+        "symptoms": { "type": "array", "description": "Observed diagnostic symptoms" },
+        "treatmentPlan": { "type": "array", "description": "Immediate interventions and dosages" },
+        "verifiedByOfficer": { "type": "boolean", "description": "Whether reviewed by Ministry Officer" },
+        "officerNotes": { "type": "string", "description": "Verification notes by officer" },
+        "timestamp": { "type": "string", "description": "ISO timestamp of submission" }
+      },
+      "required": ["cropType", "diseaseName", "severity"]
+    },
+    "AudioTranscript": {
+      "title": "AudioTranscript",
+      "description": "Audio transcription record created with gemini-3.5-transcribe",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Transcript record ID" },
+        "userId": { "type": "string", "description": "Firebase Auth user ID" },
+        "transcription": { "type": "string", "description": "Transcribed speech text" },
+        "language": { "type": "string", "description": "Spoken language detected or specified" },
+        "timestamp": { "type": "string", "description": "ISO timestamp of transcription" }
+      },
+      "required": ["transcription", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Stores individual user profile and settings"
+    },
+    "/diagnostics/{diagnosisId}": {
+      "schema": "CropDiagnosis",
+      "description": "Stores crop diagnosis records across states"
+    },
+    "/transcripts/{transcriptId}": {
+      "schema": "AudioTranscript",
+      "description": "Stores transcribed voice inputs from farmers"
+    }
+  }
+}
